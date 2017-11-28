@@ -10,7 +10,7 @@ byoc_ensure_volume() {
 }
 
 byoc_ensure_build () {
-	docker build -t byoc/${1}/build:latest $BYOC/images/build/
+	docker build -t byoc/${1}/build:latest $BYOC/images/build/${1}/
 }
 
 byoc_ensure_rsync () {
