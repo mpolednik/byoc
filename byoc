@@ -49,4 +49,4 @@ fi
 byoc_ensure
 byoc_rsync ${SOURCES} rsync://root@172.17.0.1:10873/build
 byoc_build
-byoc_rsync rsync://root@172.17.0.1:10873/out ./_out
+byoc_rsync --delete rsync://root@172.17.0.1:10873/out ./_out
