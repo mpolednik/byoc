@@ -1,0 +1,52 @@
+#!/bin/bash
+
+PROJECT_NAME=${1}
+SOURCES=${2}
+VOLUME_NAME=${PROJECT_NAME}
+BYOC="$( cd "$(dirname "$0")" ; pwd -P )"
+
+byoc_ensure_volume() {
+	docker volume create ${1}
+}
+
+byoc_ensure_build () {
+	docker build -t byoc/${1}/build:latest $BYOC/images/build/
+}
+
+byoc_ensure_rsync () {
+        docker build -t byoc/rsync:latest $BYOC/images/rsync/
+}
+
+byoc_ensure () {
+	echo "Preparing environment ..."
+	byoc_ensure_volume ${VOLUME_NAME}
+	byoc_ensure_rsync
+	byoc_ensure_build ${PROJECT_NAME}
+}
+
+byoc_usage () {
+	echo "${0} project_name sources"
+	exit 0
+}
+
+byoc_rsync () {
+	RSYNC_CID=$(docker run -d -v ${VOLUME_NAME}:/build -p 10873:873 byoc/rsync:latest)
+	echo "Syncing ..."
+	rsync -alv $@ 
+	docker stop ${RSYNC_CID}
+	docker rm ${RSYNC_CID}
+}
+
+byoc_build () {
+	echo "Building..."
+	BUILD_CID=$(docker run --rm -v ${VOLUME_NAME}:/build byoc/${PROJECT_NAME}/build:latest)
+}
+
+if [[ $# -ne 2 ]]; then
+	byoc_usage
+fi
+
+byoc_ensure
+byoc_rsync ${SOURCES} rsync://root@172.17.0.1:10873/build
+byoc_build
+byoc_rsync rsync://root@172.17.0.1:10873/out ./_out
