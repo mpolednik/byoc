@@ -14,3 +14,11 @@ container to build them
 ## How It's Done
 
 The build container has a volume mounted at /vol, the sources are rsync'd to /vol/src and output is rsync'd from /vol/out.
+
+## Usage
+
+```bash
+byoc kubevirt ${GOPATH}/src/kubevirt.io
+```
+
+creates _out directory (in current directory) with kubevirt built.
