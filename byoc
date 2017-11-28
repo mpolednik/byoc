@@ -4,6 +4,7 @@ PROJECT_NAME=${1}
 SOURCES=${2}
 VOLUME_NAME=${PROJECT_NAME}
 BYOC="$( cd "$(dirname "$0")" ; pwd -P )"
+OUTPUT_PATH=${3}
 
 byoc_ensure_volume() {
 	docker volume create ${1}
@@ -25,7 +26,7 @@ byoc_ensure () {
 }
 
 byoc_usage () {
-	echo "${0} project_name sources"
+	echo "${0} project_name sources output_dir"
 	exit 0
 }
 
@@ -49,4 +50,4 @@ fi
 byoc_ensure
 byoc_rsync ${SOURCES} rsync://root@172.17.0.1:10873/build
 byoc_build
-byoc_rsync --delete --exclude=".vagrant" rsync://root@172.17.0.1:10873/out ./_out
+byoc_rsync --delete --exclude=".vagrant" rsync://root@172.17.0.1:10873/out ${OUTPUT_PATH}
