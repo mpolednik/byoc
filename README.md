@@ -29,4 +29,7 @@ To then develop:
 cd ~/_out/kubevirt.io/kubevirt
 vagrant up
 sed "s/make all DOCKER_TAG=devel//g" cluster/vagrant/sync_build.sh | bash -
+./cluster/vagrant/sync_config.sh
+make manifests
+export KUBECTL="cluster/kubectl.sh --core" && ./cluster/deploy.sh
 ```
