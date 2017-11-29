@@ -15,10 +15,18 @@
 
 The build container has a volume mounted at /build, the sources are rsync'd to /build/src and output is rsync'd from /build/out.
 
-## Usage
+## Usage (KubeVirt)
 
 ```bash
-byoc kubevirt ${GOPATH}/src/kubevirt.io
+byoc kubevirt ${GOPATH}/src/kubevirt.io ~/_out
 ```
 
 creates _out directory (in current directory) with kubevirt built.
+
+To then develop:
+
+```bash
+cd ~/_out/kubevirt.io/kubevirt
+vagrant up
+sed "s/make all DOCKER_TAG=devel//g" cluster/vagrant/sync_build.sh | bash -
+```
