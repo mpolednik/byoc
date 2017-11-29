@@ -8,4 +8,4 @@ VOLUME /build
 
 ENV GOPATH=/build PATH=/sbin:/bin:/build/bin
 
-ENTRYPOINT go get golang.org/x/tools/cmd/goimports && go get github.com/Masterminds/glide && cd /build/src/kubevirt.io/kubevirt && make test | tee /build/out/log
+ENTRYPOINT go get golang.org/x/tools/cmd/goimports && go get github.com/Masterminds/glide && cd /build/src/kubevirt.io/kubevirt && make sync && make test | tee /build/out/log
