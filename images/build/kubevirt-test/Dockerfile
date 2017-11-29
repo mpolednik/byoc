@@ -1,6 +1,6 @@
 FROM fedora:26
 
-RUN dnf -y install make git golang pkg-config libvirt-devel && \
+RUN dnf -y install make git golang pkg-config libvirt-devel mercurial && \
     dnf -y clean all
 
 RUN mkdir -p /build/bin
