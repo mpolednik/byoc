@@ -43,7 +43,7 @@ byoc_build () {
 	BUILD_CID=$(docker run --rm -v ${VOLUME_NAME}:/build byoc/${PROJECT_NAME}/build:latest)
 }
 
-if [[ $# -ne 2 ]]; then
+if [[ $# -ne 3 ]]; then
 	byoc_usage
 fi
 
