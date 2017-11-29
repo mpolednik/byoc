@@ -40,7 +40,8 @@ byoc_rsync () {
 
 byoc_build () {
 	echo "Building..."
-	BUILD_CID=$(docker run --rm -v ${VOLUME_NAME}:/build byoc/${PROJECT_NAME}/build:latest)
+	BUILD_CID=$(docker run --rm -d -v ${VOLUME_NAME}:/build byoc/${PROJECT_NAME}/build:latest)
+        docker logs -f ${BUILD_CID}
 }
 
 if [[ $# -ne 3 ]]; then
