@@ -40,7 +40,7 @@ byoc_rsync () {
 
 byoc_build () {
 	echo "Building..."
-	BUILD_CID=$(docker run --rm -d -v ${VOLUME_NAME}:/build byoc/${PROJECT_NAME}/build:latest)
+	BUILD_CID=$(docker run --rm -d -v ${VOLUME_NAME}:/build byoc/build/${PROJECT_NAME}:latest)
         docker logs -f ${BUILD_CID}
 }
 
